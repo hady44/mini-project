@@ -7,5 +7,11 @@
   <textarea name="bio" class="form-control" placeholder="Tell us about yourself!"><%= currentUser.bio || "" %></textarea>
   <input type="submit" value="Update" class="btn btn-primary btn-block">
 </form>
+  <h1>OR</h1>
+  <h2>upload some work</h2>
+<form  action="upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="displayImage" >
 
+  <input type="submit" value="upload" class="btn">
+</form>
 <% include _footer %>

@@ -10,5 +10,8 @@
 <% if (user.bio) { %>
   <p><%= user.bio %></p>
 <% } %>
+  <% user.works.forEach(function(work){ %>
+      <div class="panel-body"><a href="/users/<%= user.username %>"><img src="../<%= work %>" alt="work"></a></div>
+  <% }) %>
 
 <% include _footer %>

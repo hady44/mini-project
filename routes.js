@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const fs = require('fs');
 
 var User = require("./models/user");
 const router = express.Router();
@@ -96,6 +97,24 @@ router.post('/edit',ensureAuthenticated, function(req, res, next){
     req.flash("info","profile updated");
     res.redirect("/edit");
   });
+});
+
+router.post('/Upload', function(req, res) {
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        console.log("Uploading: " + filename);
+        fstream = fs.createWriteStream(__dirname + '/public/' + filename);
+        req.user.works.push(filename);
+        req.user.save(function(err){
+          if(err) {return next(err);}
+          req.flash("info","work uploaded");
+        });
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.redirect('back');
+        });
+    });
 });
 
 module.exports = router;

@@ -7,12 +7,15 @@ const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
 const mongoose = require('mongoose');
+const busboy = require('connect-busboy');
+// const fs = require('fs');
 // const ejs = require('ejs');
 
 var setUpPassport = require("./setuppassport");
 var routes = require('./routes');
 
 var app = express();
+
 // mongoose.connect("mongodb://localhost:27017/mini");
 const db = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/mini';
 mongoose.connect("mongodb://localhost:27017/mini");
@@ -25,6 +28,7 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(busboy());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
