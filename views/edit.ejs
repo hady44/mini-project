@@ -7,11 +7,28 @@
   <textarea name="bio" class="form-control" placeholder="Tell us about yourself!"><%= currentUser.bio || "" %></textarea>
   <input type="submit" value="Update" class="btn btn-primary btn-block">
 </form>
-  <h1>OR</h1>
-  <h2>upload some work</h2>
-<form  action="upload" method="post" enctype="multipart/form-data">
-  <input type="file" name="displayImage" >
 
-  <input type="submit" value="upload" class="btn">
+
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <div class="row">
+            <% for(var i=0; i<projects.length; i++){%>
+                <div class="card col-xs-4">
+                    <h4 class="card-title"> <%= projects[i].title %></h4>
+                    <a href="<%= projects[i].URL %>" class="btn btn-primary card-link">Visit Website</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+<form action="/newProject" method="get">
+  <div class="card col-xs-4" style="background: #d3d3d3">
+      <input type="submit" value="+ upload more work +" class="btn btn-primary card-link" >
+  </div>
 </form>
+</div>
+</div>
+
+
+
+
 <% include _footer %>

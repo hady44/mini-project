@@ -1,0 +1,18 @@
+<% include _header %>
+
+<div class="container">
+  <div class="">
+    <div class="">
+      <h5><a href="/users/<%= user.name() %>">Created by: <%= user.name() %></a></h5>
+      <h5>Created on: <%= project.createdAt %></h5>
+      <h5>Description: <%= project.description %></h5>
+
+      <div><img src="../<%= project.img %>" alt=""></div>
+
+    <span> repo :  <%= project.repo %></span>
+    </div>
+  </div>
+
+</div>
+
+<% include _footer %>

@@ -1,0 +1,21 @@
+<% include _header %>
+
+<div class="container">
+  <div class="">
+    <div class="">
+      <!-- <h4>A picture is worth a thousand words. Why not upload one ?</h4> -->
+      <form class="form" method="POST" action="/pic " enctype="multipart/form-data" >
+        <div class="form-group">
+            <label for="InputFile">A pictur is worth a thousand word. Why not add one ? </label>
+            <input name = "displayImage" type="file" class="form-control" id="InputFile" placeholder="Upload" >
+
+               <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+      </form>
+      <form class="form" action="/" method="get">
+         <button type="submit" class="btn btn-default">skip</button>
+      </form>
+    </div>
+  </div>
+</div>
+<% include _footer%>

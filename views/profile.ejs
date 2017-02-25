@@ -10,8 +10,15 @@
 <% if (user.bio) { %>
   <p><%= user.bio %></p>
 <% } %>
-  <% user.works.forEach(function(work){ %>
-      <div class="panel-body"><a href="/users/<%= user.username %>"><img src="../<%= work %>" alt="work"></a></div>
-  <% }) %>
-
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <div class="row">
+            <% for(var i=0; i<projects.length; i++){%>
+                <div class="card col-xs-4">
+                    <h4 class="card-title"> <%= projects[i].title %></h4>
+                    <a href=" <%= projects[i].URL %>" class="btn btn-primary card-link">Visit Website</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
 <% include _footer %>
