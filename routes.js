@@ -42,7 +42,7 @@ router.post('/login',
     successRedirect: '/',
      failureRedirect: '/login',
     failureFlash: true}));
-
+//singup
 router.get('/signup',function(req, res){
   res.render("signup");
 });
@@ -67,12 +67,12 @@ router.post('/signup',function(req, res ,next){
   failureRedirect:"/signup",
   failureFlash:true
 }));
-
+//logout
 router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
-
+//profiles
 router.get('/users/:username',function(req, res, next){
   const username = req.params.username;
   User.findOne({username:username}, function(err,user){
@@ -91,7 +91,7 @@ router.get('/users/:username',function(req, res, next){
   // res.render("profile");
 });
 
-
+//edit
 router.post('/edit',ensureAuthenticated, function(req, res, next){
   req.user.displayName = req.body.displayName;
   req.user.bio = req.body.bio;
@@ -102,7 +102,7 @@ router.post('/edit',ensureAuthenticated, function(req, res, next){
   });
 
 });
-
+//uploading new project
 router.post('/newProject', ensureAuthenticated ,function(req, res,next) {
   // console.log(2);
   var newProject = new Project({
@@ -119,7 +119,7 @@ router.post('/newProject', ensureAuthenticated ,function(req, res,next) {
   res.redirect("/pic");
 
 });
-
+//An option for adding a screenshot
 router.get('/pic',ensureAuthenticated,function(req,res){
   res.render("screenshot");
 });
