@@ -2,10 +2,21 @@
 
 <h1>Sign up</h1>
 
-<form action="/signup" method="post">
-  <input name="username" type="text" class="form-control" placeholder="Username" required autofocus>
-  <input name="password" type="password" class="form-control" placeholder="Password" required>
-  <input type="submit" value="Sign up" class="btn btn-primary btn-block">
-</form>
+<div class="col-xs-12 col-md-4">
+  <div class="form-container">
+    <div class="form">
+      <form action="/signup" method="post" enctype="multipart/form-data" >
+        <input name="username" type="text" class="form-control" placeholder="Username" required autofocus>
+        <input name="password" type="password" class="form-control" placeholder="Password" required>
+        <label for="InputFile">A pciture may make other visitors more intereted in viwing your work. Would you like to upload one ? </label>
+        <input name = "avatar" type="file" class="form-control" id="InputFile" placeholder="Upload" style="margin-bottom: 10px;">
 
+        <input type="submit" value="Sign up" class="btn btn-primary btn-block">
+
+
+      </form>
+
+    </div>
+  </div>
+</div>
 <% include _footer %>

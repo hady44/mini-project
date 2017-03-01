@@ -14,8 +14,9 @@ const SALT_FACTOR = 10;
 var userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+  createdAt: String,
   displayName: String,
+  profilePicture: String,
   bio: String,
   works:{type: Array, default: ['Logo.png']}
 });

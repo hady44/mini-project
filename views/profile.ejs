@@ -5,20 +5,27 @@
 <% } %>
 
 <h1><%= user.name() %></h1>
-<h2>Joined on <%= user.createdAt %></h2>
+<h2>Member since: <%= user.createdAt %></h2>
 
 <% if (user.bio) { %>
   <p><%= user.bio %></p>
 <% } %>
+
 <div class="row">
     <div class="col-xs-12 col-md-8">
         <div class="row">
             <% for(var i=0; i<projects.length; i++){%>
                 <div class="card col-xs-4">
                     <h4 class="card-title"> <%= projects[i].title %></h4>
-                    <a href=" <%= projects[i].URL %>" class="btn btn-primary card-link">Visit Website</a>
+                    <a href=" <%= projects[i].URL %>" class="btn btn-primary card-link">Visit project</a>
                 </div>
             <% } %>
         </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4">
+      <div class="form-container">
+        <img src="/<%= user.profilePicture %>" alt="">
+      </div>
     </div>
 <% include _footer %>

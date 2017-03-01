@@ -3,13 +3,13 @@
 <div class="container">
   <div class="">
     <div class="">
-      <h5><a href="/users/<%= user.name() %>">Created by: <%= user.name() %></a></h5>
-      <h5>Created on: <%= project.createdAt %></h5>
-      <h5>Description: <%= project.description %></h5>
+      <h5> <span>Created by :</span> <a href="/users/<%= user.name() %>"> <%= user.name() %></a></h5>
+      <h5><span>Created on :</span> <%= project.createdAt %></h5>
+      <h5><span>Description :</span> <%= project.description %></h5>
+      <h5> <span>repo :</span><a href="<%= project.repo %>">   <%= project.repo %> </a></h5>
 
       <div><img src="../<%= project.img %>" alt=""></div>
 
-    <span> repo :  <%= project.repo %></span>
     </div>
   </div>
 

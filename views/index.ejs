@@ -1,20 +1,33 @@
 <% include _header %>
 
 <div class="col-lg-12">
-<h1 class="page-header">The LALA land!</h1>
+<h1 class="page-header"> MET portofolio </h1>
 </div>
 
   <div class="row">
       <div class="col-xs-12 col-md-8">
           <div class="row">
-              <% for(var i=0; i<projects.length; i++){%>
+              <% for(var i=(num-1)*10; i<projects.length ; i++){%>
                   <div class="card col-xs-4">
                       <h4 class="card-title"> <%= projects[i].title %></h4>
                       <a href="<%= projects[i].URL %>" class="btn btn-primary card-link">Visit Website</a>
                   </div>
               <% } %>
           </div>
+          <div class="pagination">
+
+              <% for(var i=1; i<count+1; i++){%>
+                <% if( i == num  ){ %>
+
+                    <a class="active" href="#"><%= i %></a>
+                <% } else{ %>
+                      <a  href="/<%= i %>"><%= i %></a>
+                  <% } %>
+              <% } %>
+
+          </div>
       </div>
+
 
 
 <% include _footer %>
