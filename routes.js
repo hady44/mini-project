@@ -151,7 +151,8 @@ router.post('/newProject', ensureAuthenticated,  upload.single('displayImage') ,
   });
 
   var filename = req.file? req.file.filename:undefined;
-  req.user.works.push(filename);
+  req.user.works.push(req.body.title);
+  console.log(req.body.title);
   req.user.save(function(err){
     if(err) {return next(err);}
     req.flash("info","project uploaded");
@@ -239,6 +240,7 @@ router.get("/:num", function(req, res, next) {
   .exec(function(err, projects) {
     if (err) { return next(err); }
     var total = [];
+    if(projects.length > 0)
     var cur = projects[0].createdBy;
     for (var i = 0; i < projects.length; i++) {
       if(cur == projects[i].createdBy && cnt<2){
@@ -274,6 +276,7 @@ router.get("/", function(req, res, next) {
   .exec(function(err, projects) {
     if (err) { return next(err); }
     var total = [];
+    if(projects.length >0)  
     var cur = projects[0].createdBy;
     for (var i = 0; i < projects.length; i++) {
       if(cur == projects[i].createdBy && cnt<2){
@@ -295,4 +298,5 @@ router.get("/", function(req, res, next) {
   });
 });
 //TODO:restrict access to login and signup
+
 module.exports = router;

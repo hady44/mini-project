@@ -18,7 +18,8 @@ var userSchema = mongoose.Schema({
   displayName: String,
   profilePicture: String,
   bio: String,
-  works:{type: Array, default: ['Logo.png']}
+  works:{type: Array, default: []},
+  
 });
 
 
