@@ -59,8 +59,17 @@ router.post('/login',
      failureRedirect: '/login',
     failureFlash: true}));
 //singup
+
+
+
 router.get('/signup',function(req, res){
-  res.render("signup");
+  if(req.user){
+    res.status(401);
+    res.render("401 ");
+  }
+  else {
+    res.render("signup");
+  }
 });
 
 
@@ -147,7 +156,8 @@ router.post('/newProject', ensureAuthenticated,  upload.single('displayImage') ,
     URL:   '/project/'+req.body.title,
     createdBy:req.user.username,
     description: req.body.Description,
-    repo: req.body.URL
+    repo: req.body.URL,
+    img: req.file?req.file.filename:undefined
   });
 
   var filename = req.file? req.file.filename:undefined;
@@ -156,16 +166,7 @@ router.post('/newProject', ensureAuthenticated,  upload.single('displayImage') ,
   req.user.save(function(err){
     if(err) {return next(err);}
     req.flash("info","project uploaded");
-    Project.find({createdBy: req.user.username})
-    .sort({ createdAt: "descending" })
-    .exec(function(err, projects) {
-      if (err) { return next(err); }
-      // res.render("index", { projects: projects });
-      projects[0].img = filename;
-      projects[0].save();
-      console.log(projects[0].createdBy);
-      // console.log();
-    });
+
   });
 
   newProject.save();
@@ -233,36 +234,45 @@ router.get("/project/:projectName",function(req, res, next){
 router.get("/:num", function(req, res, next) {
   // log
   var num = req.params.num;
-  // num = num?num:1;
   var cnt = 0;
-  Project.find()
-  .sort({ createdAt: "descending" })
-  .exec(function(err, projects) {
+  var total = [];
+  // console.log('user count is'+User.count());
+
+
+  User.find()
+  .sort({ createdAt: "ascending" })
+  .exec(function(err, users) {
     if (err) { return next(err); }
-    var total = [];
-    if(projects.length > 0)
-    var cur = projects[0].createdBy;
-    for (var i = 0; i < projects.length; i++) {
-      if(cur == projects[i].createdBy && cnt<2){
-        total.push(projects[i]);
-        cnt++;
-      }
-      else {
-        if(cur !== projects[i].createdBy){
-          cur = projects[i].createdBy;
-          cnt = 1;
+    var left = users.length;
+    if(users.length == 0)
+    {
+      // cnt = Math.ceil(total.length/10);
+      return res.render("index", { projects: total, count : cnt, num:num });
+
+    }
+    for (var i = 0; i < users.length ; i++) {
+      // console.log(users[i].username);
+      Project.find({createdBy:users[i].username}).sort({createdAt:"ascending"}).skip(num-1).limit(2).exec(function(err,projects){
+        if(err){return next(err);}
+        left--;
+        // total = total.concat(projects);
+        for (var i = 0; i < projects.length; i++) {
           total.push(projects[i]);
         }
-      }
+        // console.log(total.length);
+        for (var i = 0; i < total.length; i++) {
+          console.log(total[i].createdBy);
+        }
+        if(left === 0)
+        {
+          cnt = Math.ceil(total.length/10);
+
+          res.render("index", { projects: total, count : cnt, num:num });
+        }
+      });
     }
+    // console.log(total.length);
 
-    // console.log( "Number of users:", Math.ceil(count/10) );
-    cnt = Math.ceil(total.length/10);
-
-    res.render("index", { projects: total, count : cnt, num:num });
-    console.log(cnt);
-
-  // console.log(cnt);
   });
 });
 
@@ -271,31 +281,46 @@ router.get("/", function(req, res, next) {
   var num =1;
   num = num?num:1;
   var cnt = 0;
-  Project.find()
-  .sort({ createdAt: "descending" })
-  .exec(function(err, projects) {
+  var total = [];
+  // console.log('user count is'+User.count());
+
+
+  User.find()
+  .sort({ createdAt: "ascending" })
+  .exec(function(err, users) {
     if (err) { return next(err); }
-    var total = [];
-    if(projects.length >0)  
-    var cur = projects[0].createdBy;
-    for (var i = 0; i < projects.length; i++) {
-      if(cur == projects[i].createdBy && cnt<2){
-        total.push(projects[i]);
-        cnt++;
-      }
-      else {
-        if(cur !== projects[i].createdBy){
-          cur = projects[i].createdBy;
-          cnt = 1;
+    var left = users.length;
+    if(users.length == 0)
+    {
+      // cnt = Math.ceil(total.length/10);
+      return res.render("index", { projects: total, count : cnt, num:num });
+
+    }
+    for (var i = 0; i < users.length ; i++) {
+      // console.log(users[i].username);
+      Project.find({createdBy:users[i].username}).sort({createdAt:"ascending"}).skip(num-1).limit(2).exec(function(err,projects){
+        if(err){return next(err);}
+        left--;
+        // total = total.concat(projects);
+        for (var i = 0; i < projects.length; i++) {
           total.push(projects[i]);
         }
-      }
-    }
-    cnt = Math.ceil(total.length/10);
+        // console.log(total.length);
+        for (var i = 0; i < total.length; i++) {
+          console.log(total[i].createdBy);
+        }
+        if(left === 0)
+        {
+          cnt = Math.ceil(total.length/10);
 
-    res.render("index", { projects: total, count : cnt, num:num });
-  // console.log(cnt);
+          res.render("index", { projects: total, count : cnt, num:num });
+        }
+      });
+    }
+    // console.log(total.length);
+
   });
+
 });
 //TODO:restrict access to login and signup
 
