@@ -7,10 +7,15 @@
   <div class="row">
       <div class="col-xs-12 col-md-8">
           <div class="row">
-              <% for(var i=(num-1)*10; i<projects.length ; i++){%>
+              <% for(var i=0; i<users.length ; i++){%>
                   <div class="card col-xs-4">
-                      <h4 class="card-title"> <%= projects[i].title %></h4>
-                      <a href="<%= projects[i].URL %>" class="btn btn-primary card-link">Visit Website</a>
+                    <a href="/users/<%= users[i].username %>">  <img src="<%= users[i].profilePicture %>" alt="" style="width: 50px; height:50px;"> </a>
+                    <% if(users[i].works.length >0) %>
+                      <a href="/project/<%= users[i].works[0]  %>"><h4 class="card-title">  <%= users[i].works[0] %></h4></a>
+                      <%   if(users[i].works.length >1) %>
+                        <a href="/project/<%= users[i].works[1]  %>"><h4 class="card-title"> <%= users[i].works[1] %></h4></a>
+
+                        <a href="/users/<%= users[i].username %>"> <%= users[i].username %></a>
                   </div>
               <% } %>
           </div>

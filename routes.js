@@ -232,45 +232,54 @@ router.get("/project/:projectName",function(req, res, next){
 });
 
 router.get("/:num", function(req, res, next) {
+  const regex = /^\d+$/;
+
   // log
   var num = req.params.num;
+  if(!regex.test(num)){
+    return res.status(404).render("404");
+  }
   var cnt = 0;
   var total = [];
   // console.log('user count is'+User.count());
-
+  User.find(function(err, users){
+    if(err){return next(err);}
+    cnt = Math.ceil(users.length/10);
+  });
 
   User.find()
-  .sort({ createdAt: "ascending" })
+  .sort({ createdAt: "ascending" }).skip((num-1)*10).limit(10)
   .exec(function(err, users) {
     if (err) { return next(err); }
     var left = users.length;
     if(users.length == 0)
     {
       // cnt = Math.ceil(total.length/10);
-      return res.render("index", { projects: total, count : cnt, num:num });
+      return res.render("index", { projects: total, count : cnt, num:num, users: users});
 
     }
-    for (var i = 0; i < users.length ; i++) {
-      // console.log(users[i].username);
-      Project.find({createdBy:users[i].username}).sort({createdAt:"ascending"}).skip(num-1).limit(2).exec(function(err,projects){
-        if(err){return next(err);}
-        left--;
-        // total = total.concat(projects);
-        for (var i = 0; i < projects.length; i++) {
-          total.push(projects[i]);
-        }
-        // console.log(total.length);
-        for (var i = 0; i < total.length; i++) {
-          console.log(total[i].createdBy);
-        }
-        if(left === 0)
-        {
-          cnt = Math.ceil(total.length/10);
-
-          res.render("index", { projects: total, count : cnt, num:num });
-        }
-      });
-    }
+    // for (var i = 0; i < users.length ; i++) {
+    //   // console.log(users[i].username);
+    //   Project.find({createdBy:users[i].username}).sort({createdAt:"ascending"}).skip(num-1).limit(2).exec(function(err,projects){
+    //
+    //     if(err){return next(err);}
+    //     left--;
+    //     // total = total.concat(projects);
+    //     for (var i = 0; i < projects.length; i++) {
+    //       total.push(projects[i]);
+    //     }
+    //     // console.log(total.length);
+    //     for (var i = 0; i < total.length; i++) {
+    //       console.log(total[i].createdBy);
+    //     }
+    //     if(left === 0)
+    //     {
+    //       // cnt = Math.ceil(users.length/10);
+    //       console.log(users.length+"********************");
+          res.render("index", { projects: total, count : cnt, num:num, users : users });
+    //     }
+    //   });
+    // }
     // console.log(total.length);
 
   });
@@ -283,45 +292,54 @@ router.get("/", function(req, res, next) {
   var cnt = 0;
   var total = [];
   // console.log('user count is'+User.count());
-
+  User.find(function(err, users){
+    if(err){return next(err);}
+    cnt = Math.ceil(users.length/10);
+  });
 
   User.find()
-  .sort({ createdAt: "ascending" })
+  .sort({ createdAt: "ascending" }).skip((num-1)*10).limit(10)
   .exec(function(err, users) {
     if (err) { return next(err); }
     var left = users.length;
     if(users.length == 0)
     {
       // cnt = Math.ceil(total.length/10);
-      return res.render("index", { projects: total, count : cnt, num:num });
+      return res.render("index", { projects: total, count : cnt, num:num, users:users});
 
     }
-    for (var i = 0; i < users.length ; i++) {
-      // console.log(users[i].username);
-      Project.find({createdBy:users[i].username}).sort({createdAt:"ascending"}).skip(num-1).limit(2).exec(function(err,projects){
-        if(err){return next(err);}
-        left--;
-        // total = total.concat(projects);
-        for (var i = 0; i < projects.length; i++) {
-          total.push(projects[i]);
-        }
-        // console.log(total.length);
-        for (var i = 0; i < total.length; i++) {
-          console.log(total[i].createdBy);
-        }
-        if(left === 0)
-        {
-          cnt = Math.ceil(total.length/10);
-
-          res.render("index", { projects: total, count : cnt, num:num });
-        }
-      });
-    }
+    // for (var i = 0; i < users.length ; i++) {
+    //   // console.log(users[i].username);
+    //   Project.find({createdBy:users[i].username}).sort({createdAt:"ascending"}).skip(num-1).limit(2).exec(function(err,projects){
+    //
+    //     if(err){return next(err);}
+    //     left--;
+    //     // total = total.concat(projects);
+    //     for (var i = 0; i < projects.length; i++) {
+    //       total.push(projects[i]);
+    //     }
+    //     // console.log(total.length);
+    //     for (var i = 0; i < total.length; i++) {
+    //       console.log(total[i].createdBy);
+    //     }
+    //     if(left === 0)
+    //     {
+    //       // cnt = Math.ceil(users.length/10);
+    //       console.log(users.length+"********************");
+          res.render("index", { projects: total, count : cnt, num:num, users : users });
+    //     }
+    //   });
+    // }
     // console.log(total.length);
 
   });
 
 });
+
+// router.use(function (err, req, res, next) {
+//   return res.status(404).render("404");
+// });
+
 //TODO:restrict access to login and signup
 
 module.exports = router;
