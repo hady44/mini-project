@@ -4,4 +4,4 @@ The main page displays blocks which represent portofolio summaries (a profile pi
 
 Users need to signup to add work.
 
-deployed@ 54.218.109.10:3000
+deployed@ http://54.202.206.205:3000/
